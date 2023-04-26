@@ -1,3 +1,43 @@
+var pressedKeys = {};
+window.onkeydown = function(e) {
+    pressedKeys[e.keyCode] = true;
+
+//    115 -> F8 download csv
+    if (e.keyCode === 119) {
+        var getEmails = JSON.parse(localStorage.getItem('email'))
+
+        let csvContent = "data:text/csv;charset=utf-8," + getEmails.map(e => e.join(",")).join("\n");
+
+        var encodedUri = encodeURI(csvContent);
+        window.open(encodedUri);
+
+//        document.getElementById('content').appendChild(makeUL(getEmails))
+    }
+
+//    if (e.keyCode === 119) {
+//        localStorage.removeItem('email')
+//    }
+}
+
+function makeUL(array) {
+    // Create the list element:
+    var list = document.createElement('ul');
+
+    for (var i = 0; i < array.length; i++) {
+        // Create the list item:
+        var item = document.createElement('li');
+
+        // Set its contents:
+        item.appendChild(document.createTextNode(array[i]));
+
+        // Add it to the list:
+        list.appendChild(item);
+    }
+
+    // Finally, return the constructed list:
+    return list;
+}
+
 class GameCoordinator {
   constructor() {
     this.gameUi = document.getElementById('game-ui');
@@ -10,6 +50,7 @@ class GameCoordinator {
     this.extraLivesDisplay = document.getElementById('extra-lives');
     this.fruitDisplay = document.getElementById('fruit-display');
     this.mainMenu = document.getElementById('main-menu-container');
+    this.endMenu = document.getElementById('end-menu-container');
     this.gameStartButton = document.getElementById('game-start');
     this.pauseButton = document.getElementById('pause-button');
     this.soundButton = document.getElementById('sound-button');
@@ -18,6 +59,7 @@ class GameCoordinator {
     this.pausedText = document.getElementById('paused-text');
     this.bottomRow = document.getElementById('bottom-row');
     this.movementButtons = document.getElementById('movement-buttons');
+    this.email = document.getElementById('email');
 
     this.mazeArray = [
       ['XXXXXXXXXXXXXXXXXXXXXXXXXXXX'],
@@ -143,6 +185,24 @@ class GameCoordinator {
    * Reveals the game underneath the loading covers and starts gameplay
    */
   startButtonClick() {
+    if(email.value === '') {
+        email.style.border = '5px solid red'
+        email.style.borderRadius = '3px'
+        return;
+    }
+
+    email.style.border = '1px solid'
+    email.style.borderRadius = 'inherit'
+
+    var emailArray = JSON.parse(localStorage.getItem('email'));
+
+    if (emailArray === null) {
+        emailArray = []
+    }
+
+    emailArray.push([email.value, Math.floor(Date.now() / 1000)]);
+    localStorage.setItem('email', JSON.stringify(emailArray));
+
     this.leftCover.style.left = '-50%';
     this.rightCover.style.right = '-50%';
     this.mainMenu.style.opacity = 0;
@@ -899,9 +959,9 @@ class GameCoordinator {
         this.rightCover.style.right = '0';
 
         setTimeout(() => {
-          this.mainMenu.style.opacity = 1;
+          this.endMenu.style.opacity = 1;
           this.gameStartButton.disabled = false;
-          this.mainMenu.style.visibility = 'visible';
+          this.endMenu.style.visibility = 'visible';
         }, 1000);
       }, 2500);
     }, 2250);

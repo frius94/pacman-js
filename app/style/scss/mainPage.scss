@@ -9,6 +9,21 @@ body {
   overflow: hidden;
 }
 
+#email {
+    margin-bottom: 25px;
+    margin-top: 25px;
+    width: 700px;
+    font-size: 30px;
+}
+
+#content {
+    ul {
+        text-align: center;
+        list-style-type: none;
+        color: black;
+    }
+}
+
 .overflow-mask {
   background-color: $black;
   color: $white;

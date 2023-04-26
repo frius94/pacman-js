@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src='https://www.googletagmanager.com/gtag/js?id=UA-142539004-1'></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-142539004-1');
-    </script>
 
     <script src='build/app.js'></script>
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico'>
@@ -28,9 +19,20 @@
 
       <div id='main-menu-container' class='main-menu-container'>
         <img id='logo' class='logo' src='app/style/graphics/pacman_logo.png'>
+        <div id="content">
+          <p style="color: black; text-align: center; font-size: large">Enter your E-Mail address</p>
+          <input type='text' id='email' name='email'>
+        </div>
         <button id='game-start' class='game-start'>
           PLAY
         </button>
+      </div>
+
+      <div id='end-menu-container' class='main-menu-container'>
+        <div id="content2" style="position: relative;top: 50%">
+          <p style="color: black; text-align: center; font-size: large">Danke für deine Teilnahme.
+            <br><br>Mit diesem Code kannst du Edelsnus 20% reduziert bestellen:<br><br>EDELSNUS20</p>
+        </div>
       </div>
 
       <div class='header-buttons'>
